@@ -3,16 +3,18 @@ import { getAudiobookBySlug } from "@/lib/fetch/getAudiobookBySlug";
 
 import Link from "next/link";
 import Image from "next/image";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 import { Button } from "@/components/ui/Button";
 import { AudiobookNav } from "@/components/page/audiobooks/AudiobookNav";
 import { ChaptersContainer } from "@/components/page/audiobooks/ChaptersContainer";
 
-import type { Metadata } from 'next'
- 
+import type { Metadata } from "next";
+
 export const metadata: Metadata = {
-  title: 'Audiobook',
-}
+  title: "Audiobook",
+};
 
 export default async function AudiobookPage({
   params: { audiobookSlug },
@@ -27,7 +29,7 @@ export default async function AudiobookPage({
       </h1>
     );
   }
- // console.log(data);
+  // console.log(data);
 
   return (
     <>
@@ -77,15 +79,14 @@ export default async function AudiobookPage({
               <div className="flex flex-col">
                 <h2 className="font-semibold text-xl lg:text-2xl">Synopsis</h2>
                 <div className="text-base text-muted-foreground lg:text-lg">
-                  {data?.synopsis &&
-                    data?.synopsis
-                      .split("\\n")
-                      .map((item: string, index: number) => (
-                        <p key={index}>
-                          {item}
-                          <br />
-                        </p>
-                      ))}
+                  {data?.synopsis && (
+                    <ReactMarkdown
+                      className="prose prose-lg  text-muted-foreground "
+                      remarkPlugins={[remarkGfm]}
+                    >
+                      {data?.synopsis}
+                    </ReactMarkdown>
+                  )}
                 </div>
               </div>
             </div>

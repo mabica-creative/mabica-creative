@@ -1,8 +1,6 @@
 "use client"; // Tambahkan ini di atas
 
 import { useState, ChangeEvent } from "react";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
 import { Clipboard } from "lucide-react"; // Mengimpor ikon Clipboard dari lucide-react
 import {
   Accordion,
@@ -10,6 +8,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/Accordion";
+import { MarkdownPreview } from "@/components/layout/MarkdownPreview"
 
 // Header component
 const Header: React.FC = () => {
@@ -22,7 +21,7 @@ const Header: React.FC = () => {
         <AccordionItem value="item-1">
           <AccordionTrigger>Cara menggunakan:</AccordionTrigger>
           <AccordionContent>
-            <ul className="text-left text-gray-300 mt-2">
+            <ul className="text-left  mt-2">
               <li>
                 <code># Heading 1</code> - Membuat judul besar
               </li>
@@ -90,7 +89,7 @@ const MarkdownEditor: React.FC<MarkdownEditorProps> = ({
         value={markdown}
         onChange={handleChange}
         placeholder="Tulis markdown di sini..."
-        className="w-full h-96 p-4 border rounded-md shadow-md text-lg bg-gray-900 text-gray-100 focus:outline-none focus:ring-2 focus:ring-primary"
+        className="w-full h-96 p-4 border bg-background text-foreground rounded-md shadow-md text-lg  focus:outline-none focus:ring-2 focus:ring-primary"
       ></textarea>
       {/* Tombol Copy */}
       <button
@@ -104,23 +103,6 @@ const MarkdownEditor: React.FC<MarkdownEditorProps> = ({
   );
 };
 
-// MarkdownPreview component
-interface MarkdownPreviewProps {
-  markdown: string;
-}
-
-const MarkdownPreview: React.FC<MarkdownPreviewProps> = ({ markdown }) => {
-  return (
-    <div className="w-full lg:w-1/2 h-96 p-4 border rounded-md shadow-md bg-gray-800 overflow-y-auto">
-      <ReactMarkdown
-        className="prose prose-lg text-gray-100"
-        remarkPlugins={[remarkGfm]}
-      >
-        {markdown}
-      </ReactMarkdown>
-    </div>
-  );
-};
 
 // Main MarkdownEditorPage component
 const MarkdownEditorPage: React.FC = () => {
