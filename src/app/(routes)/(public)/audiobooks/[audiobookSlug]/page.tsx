@@ -4,7 +4,6 @@ import { getAudiobookBySlug } from "@/lib/fetch/getAudiobookBySlug";
 import Link from "next/link";
 import Image from "next/image";
 import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
 
 import { Button } from "@/components/ui/Button";
 import { AudiobookNav } from "@/components/page/audiobooks/AudiobookNav";
@@ -82,7 +81,6 @@ export default async function AudiobookPage({
                   {data?.synopsis && (
                     <ReactMarkdown
                       className="prose prose-lg  text-muted-foreground "
-                      remarkPlugins={[remarkGfm]}
                     >
                       {data?.synopsis}
                     </ReactMarkdown>
