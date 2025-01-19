@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import {
   Bold,
@@ -10,14 +10,28 @@ import {
   Loader,
   Eye,
   EyeOff,
-} from "lucide-react"; // Importing icons from lucide-react
-import ReactMarkdown from "react-markdown"; // To render markdown
+} from "lucide-react";
+import ReactMarkdown from "react-markdown";
 
 export default function MarkdownEditor() {
   const [markdown, setMarkdown] = useState<string>(""); // State for markdown text
   const [isUploading, setIsUploading] = useState<boolean>(false); // Loading state for image upload
   const [previewVisible, setPreviewVisible] = useState<boolean>(true); // State to toggle preview visibility
+  const [imageUrls, setImageUrls] = useState<string[]>([]); // Array to store image URLs
   const textareaRef = useRef<HTMLTextAreaElement>(null); // Textarea reference
+
+  // Load image URLs from localStorage on component mount
+  useEffect(() => {
+    const savedImages = localStorage.getItem("imageUrls");
+    if (savedImages) {
+      setImageUrls(JSON.parse(savedImages));
+    }
+  }, []);
+
+  // Save image URLs to localStorage whenever they change
+  useEffect(() => {
+    localStorage.setItem("imageUrls", JSON.stringify(imageUrls));
+  }, [imageUrls]);
 
   // Handle file drop and upload
   const onDrop = async (acceptedFiles: File[]) => {
@@ -39,7 +53,9 @@ export default function MarkdownEditor() {
         if (response.ok) {
           const fileUrl = data.url;
 
-          // Insert URL into markdown
+          // Update image URLs and insert into markdown
+          setImageUrls((prev) => [...prev, fileUrl]);
+
           const textarea = textareaRef.current;
           if (!textarea) return;
 
@@ -47,12 +63,7 @@ export default function MarkdownEditor() {
           const beforeText = markdown.slice(0, cursorPos);
           const afterText = markdown.slice(cursorPos);
 
-          const isImage = file.type.startsWith("image/");
-          const fileMarkdown = isImage
-            ? `![Image](${fileUrl})`
-            : `[File](${fileUrl})`;
-
-          setMarkdown(`${beforeText}${fileMarkdown}\n${afterText}`);
+          setMarkdown(`${beforeText}![Image](${fileUrl})\n${afterText}`);
         } else {
           alert("Upload failed: " + data.error);
         }
@@ -148,6 +159,24 @@ export default function MarkdownEditor() {
               </div>
             </div>
           )}
+        </div>
+        {/* Image Previews */}
+        <div className="mt-4">
+          <h2 className="text-lg font-semibold mb-2">Uploaded Images</h2>
+          <div className="flex flex-wrap gap-4">
+            {imageUrls.map((url, index) => (
+              <div
+                key={index}
+                className="w-32 h-32 border rounded-md overflow-hidden"
+              >
+                <img
+                  src={url}
+                  alt={`Uploaded ${index}`}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
