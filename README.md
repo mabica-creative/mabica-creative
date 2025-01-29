@@ -28,7 +28,7 @@ CLOUDINARY_SECRET=""
 CLOUDINARY_KEY=""
 
 # Fill in the domain currently in use
-NEXT_PUBLIC_BASE_URL="" # localhost:3000 | kumanimeweb.vercel.app
+NEXT_PUBLIC_BASE_URL="" # http://localhost:3000 | https://kumanimeweb.vercel.app
 
 # Fill in when entering production with production
 NODE_ENV="" # production | dev```
