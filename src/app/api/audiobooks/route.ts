@@ -5,7 +5,7 @@ import { authenticate } from "@/lib/utils/auth"; // Import fungsi autentikasi
 export async function GET(request: NextRequest) {
   try {
     if (!authenticate(request)) {
-      return NextResponse.json({ error: "Unauthorized." }, { status: 401 });
+      return NextResponse.json({ error: "Unauthorizesd." }, { status: 401 });
     }
 
     const data = await prisma.audiobook.findMany({
