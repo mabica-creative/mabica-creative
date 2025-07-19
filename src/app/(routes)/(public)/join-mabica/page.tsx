@@ -30,7 +30,7 @@ export default function JoinMabicaPage() {
         <div className="grid gap-8 md:grid-cols-2">
           <div className="space-y-6">
             <h1 className="text-3xl font-bold md:text-4xl lg:text-5xl">
-              ✨ Join MABICA
+              ✨ Join MABICA (Mari Bikin Cerita)
             </h1>
             <p className="text-lg text-muted-foreground">
               Mari Bikin Cerita Bersama Kami — MABICA adalah ekosistem kreatif
