@@ -3,7 +3,7 @@ import dataOverview from "@/lib/data/dataOverview.json";
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | Mabica Creative - Mari Bikin Cerita",
+    template: "%s | Mabica Creative (Mari Bikin Cerita)",
     default: "Mabica Creative - Mari Bikin Cerita",
   },
   description: dataOverview.aboutDescription,
